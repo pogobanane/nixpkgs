@@ -278,10 +278,6 @@ rec {
         else
           QEMU_NR_VCPUS="$NIX_BUILD_CORES"
         fi
-        # qemu only supports 255 vCPUs (see error from `qemu-system-x86_64 -smp 256`)
-        if [ "$QEMU_NR_VCPUS" -gt 255 ]; then
-          QEMU_NR_VCPUS=255
-        fi
         QEMU_OPTS+=" -smp cpus=$QEMU_NR_VCPUS"
       fi
 
