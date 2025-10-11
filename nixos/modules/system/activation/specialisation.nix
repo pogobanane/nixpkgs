@@ -97,7 +97,12 @@ in
     system.systemBuilderCommands = ''
       mkdir $out/specialisation
       ${concatStringsSep "\n" (
-        mapAttrsToList (name: path: "ln -s ${path} $out/specialisation/${escapeShellArg name}") children
+        mapAttrsToList (name: path: ''
+        cp -r ${path} $out/specialisation/${escapeShellArg name}
+        substituteInPlace \
+          $(find $out/specialisation/${escapeShellArg name} -type f) \
+          --replace-quiet ${path} $out/specialisation/${escapeShellArg name}
+        '') children
       )}
     '';
   };
